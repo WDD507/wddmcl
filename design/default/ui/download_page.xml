@@ -1,0 +1,41 @@
+<window name="download_page" disable_anim="false">
+  <!-- 标题和导航 -->
+  <label name="Title" x="10" y="10" w="280" h="30" style:normal:text_color="#3F3F3F" style:normal:font_size="30" style:normal:font_name="" text="WDD's Minecraft Launcher"/>
+  <button name="home_page_btn" x="290" y="10" w="100" h="36" style="WDDdefault" text="主页"/>
+  <button name="download_page_btn" x="400" y="10" w="100" h="36" enable="false" style="WDDdefault" text="下载"/>
+  <button name="settings_page_btn" x="510" y="10" w="100" h="36" style="WDDdefault" text="设置"/>
+  <button name="more_page_btn" x="620" y="10" w="100" h="36" style="WDDdefault" text="更多"/>
+  <!-- 筛选标签 -->
+  <button name="filter_release" x="10" y="55" w="100" h="30" style="WDDdefault" text="正式版"/>
+  <button name="filter_snapshot" x="120" y="55" w="100" h="30" style="WDDdefault" text="快照版"/>
+  <button name="filter_old" x="230" y="55" w="100" h="30" style="WDDdefault" text="旧版本"/>
+  <!-- 版本列表 -->
+  <scroll_view name="version_scroll" x="10" y="95" w="780" h="380">
+    <list_view name="version_list" x="0" y="0" w="780" h="380">
+      <list_item name="ver_item_1" x="0" y="0" w="780" h="60" enable="true">
+        <label name="ver_id_1" x="15" y="20" w="150" h="20" style:normal:font_size="16" text="1.20.1"/>
+        <label name="ver_type_1" x="170" y="20" w="80" h="20" style:normal:font_size="14" text="Release"/>
+        <label name="ver_date_1" x="260" y="20" w="120" h="20" style:normal:font_size="14" text="2023-06-12"/>
+        <button name="download_btn_1" x="700" y="15" w="70" h="30" style="WDDdefault" text="下载"/>
+      </list_item>
+      <list_item name="ver_item_2" x="0" y="60" w="780" h="60">
+        <label name="ver_id_2" x="15" y="20" w="150" h="20" style:normal:font_size="16" text="1.19.4"/>
+        <label name="ver_type_2" x="170" y="20" w="80" h="20" style:normal:font_size="14" text="Release"/>
+        <label name="ver_date_2" x="260" y="20" w="120" h="20" style:normal:font_size="14" text="2022-11-08"/>
+        <button name="download_btn_2" x="700" y="15" w="70" h="30" style="WDDdefault" text="下载"/>
+      </list_item>
+      <list_item name="ver_item_3" x="0" y="120" w="780" h="60">
+        <label name="ver_id_3" x="15" y="20" w="150" h="20" style:normal:font_size="16" text="1.19.3"/>
+        <label name="ver_type_3" x="170" y="20" w="80" h="20" style:normal:font_size="14" text="Release"/>
+        <label name="ver_date_3" x="260" y="20" w="120" h="20" style:normal:font_size="14" text="2022-08-05"/>
+        <button name="download_btn_3" x="700" y="15" w="70" h="30" style="WDDdefault" text="下载"/>
+      </list_item>
+    </list_view>
+  </scroll_view>
+  <!-- 下载进度 -->
+  <view name="download_progress_card" x="10" y="490" w="780" h="100" style:normal:bg_color="#F5F5F5">
+    <label name="progress_title" x="15" y="10" w="760" h="25" style:normal:font_size="16" text="下载进度"/>
+    <label name="progress_info" x="15" y="40" w="760" h="20" style:normal:font_size="14" text="准备下载..."/>
+    <progress_bar name="download_progress_bar" x="15" y="65" w="750" h="25" value="0"/>
+  </view>
+</window>

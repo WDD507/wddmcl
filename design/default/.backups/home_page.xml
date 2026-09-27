@@ -1,0 +1,10 @@
+<window name="home_page">
+  <label name="Title" x="10" y="10" w="280" h="30" style:normal:text_color="#3F3F3F" style:normal:font_size="30" style:normal:font_name="" text="WDD's Minecraft Launcher"/>
+  <button name="start_game" x="10" y="526" w="280" h="64" style:normal:round_radius="5" style:normal:font_name="" style:normal:text_align_h="center" style:normal:text_align_v="middle" style="WDDdefault" enable="true" style:normal:font_size="27" style:pressed:font_size="27" style:disable:font_size="27" style:focused:font_size="27" style:over:font_size="27" text="开始游戏"/>
+  <button name="choose_ver" x="10" y="466" w="130" h="50" style:normal:font_name="" style="WDDdefault" text="选择版本"/>
+  <button name="ver_settings" x="160" y="466" w="130" h="50" style:normal:font_name="" style="WDDdefault" text="版本设置"/>
+  <button name="home_page_btn" x="290" y="10" w="100" h="36" enable="false" style:disable:font_size="27" style:over:font_size="27" style:normal:font_size="27" style:pressed:font_size="27" style:focused:font_size="27" style:normal:font_name="" style="WDDdefault" text="主页"/>
+  <button name="download_page_btn" x="400" y="10" w="100" h="36" style:normal:font_name="" style:normal:font_size="27" style:pressed:font_size="27" style:over:font_size="27" style:disable:font_size="27" style:focused:font_size="27" style="WDDdefault" text="下载"/>
+  <button name="settings_page_btn" x="510" y="10" w="100" h="36" style="WDDdefault" text="设置"/>
+  <button name="more_page_btn" x="620" y="10" w="100" h="36" style:normal:font_name="" style:normal:font_size="27" style="WDDdefault" text="更多"/>
+</window>

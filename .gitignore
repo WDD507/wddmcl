@@ -1,0 +1,45 @@
+# 编译产物
+*.exe
+*.o
+*.obj
+*.lib
+*.so
+*.pdb
+
+# 根目录运行时 DLL（third_party/ 下的预编译库保留）
+/awtk.dll
+/tkc.dll
+/libcurl-x64.dll
+
+# AWTK 测试插件
+third_party/awtk/bin/plugins_for_test/
+
+# 构建目录
+build/
+.backup_files/
+
+# 运行时数据
+.minecraft/
+output.txt
+latest.log
+
+# 测试文件与临时脚本
+test_*
+tester*
+simple_compiler_test.*
+example_*
+compiler_detection*
+compile_compiler_detection.bat
+SConstruct
+
+# 微软认证测试
+mc-auth-ms/
+
+# IDE 配置
+.vscode/
+*.user
+
+# 临时文件
+*.tmp
+*.bak
+*~

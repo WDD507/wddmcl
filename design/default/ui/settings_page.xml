@@ -1,0 +1,42 @@
+<window name="settings_page">
+  <!-- 标题和导航 -->
+  <label name="Title" x="10" y="10" w="280" h="30" style:normal:text_color="#3F3F3F" style:normal:font_size="30" style:normal:font_name="" text="WDD's Minecraft Launcher"/>
+  <button name="home_page_btn" x="290" y="10" w="100" h="36" style="WDDdefault" text="主页"/>
+  <button name="download_page_btn" x="400" y="10" w="100" h="36" style="WDDdefault" text="下载"/>
+  <button name="settings_page_btn" x="510" y="10" w="100" h="36" enable="false" style="WDDdefault" text="设置"/>
+  <button name="more_page_btn" x="620" y="10" w="100" h="36" style="WDDdefault" text="更多"/>
+  <!-- Java 设置 -->
+  <view name="java_settings_card" x="10" y="55" w="780" h="160" style:normal:bg_color="#F5F5F5">
+    <label name="java_title" x="15" y="15" w="100" h="25" style:normal:font_size="18" style:normal:text_color="#333333" text="Java 设置"/>
+    <label name="java_path_label" x="15" y="55" w="80" h="25" style:normal:font_size="14" text="Java路径："/>
+    <edit name="java_path_edit" x="100" y="55" w="580" h="25" style:normal:font_size="18" text="C:\\Program Files\\Java\\jdk-17\\bin\\java.exe"/>
+    <button name="browse_java_btn" x="695" y="55" w="75" h="25" style="WDDdefault" text="浏览"/>
+    <label name="max_mem_label" x="15" y="95" w="80" h="25" style:normal:font_size="14" text="最大内存："/>
+    <spin_box min="1024" max="16384" step="512" name="max_mem_spin" x="100" y="95" w="100" h="25" style:normal:font_size="18" value="4096"/>
+    <label name="mem_unit_label" x="210" y="95" w="30" h="25" style:normal:font_size="14" text="MB"/>
+    <label name="min_mem_label" x="250" y="95" w="80" h="25" style:normal:font_size="14" text="最小内存："/>
+    <spin_box min="512" max="8192" step="512" name="min_mem_spin" x="340" y="95" w="100" h="25" style:normal:font_size="18" value="2048"/>
+    <label name="min_mem_unit" x="450" y="95" w="30" h="25" style:normal:font_size="14" text="MB"/>
+  </view>
+  <!-- 启动器设置 -->
+  <view name="launcher_settings_card" x="10" y="363" w="780" h="160" style:normal:bg_color="#F5F5F5">
+    <label name="launcher_title" x="15" y="15" w="100" h="25" style:normal:font_size="18" style:normal:text_color="#333333" text="启动器设置"/>
+    <label name="data_dir_label" x="15" y="55" w="80" h="25" style:normal:font_size="14" text="数据目录："/>
+    <edit name="data_dir_edit" x="100" y="55" w="580" h="25" style:normal:font_size="18" text=".minecraft"/>
+    <button name="browse_dir_btn" x="695" y="55" w="75" h="25" style="WDDdefault" text="浏览"/>
+    <check_button name="auto_update_check" x="15" y="95" w="200" h="25" style:normal:font_size="18" text="自动更新启动器"/>
+    <check_button name="notify_check" x="220" y="95" w="200" h="25" style:normal:font_size="18" text="检查更新时通知"/>
+    <check_button name="log_debug_check" x="430" y="95" w="200" h="25" style:normal:font_size="18" text="显示调试日志"/>
+  </view>
+  <!-- 保存按钮 -->
+  <button name="save_settings_btn" x="10" y="538" w="280" h="50" style="WDDdefault" text="保存设置"/>
+  <button name="reset_settings_btn" x="300" y="538" w="280" h="50" style="WDDdefault" text="恢复默认"/>
+  <view name="launch_params_card" x="10" y="225" w="780" h="100" style:normal:bg_color="#F5F5F5">
+    <label name="params_label" x="15" y="15" w="100" h="25" style:normal:font_size="18" style:normal:text_color="#333333" text="启动参数"/>
+    <label name="mem_label" x="15" y="50" w="80" h="25" style:normal:font_size="14" text="内存："/>
+    <combo_box_ex min="0" max="1048576" name="mem_combo" x="90" y="50" w="120" h="25" localize_options="false" auto_fix="true" input_type="text" password_visible="false" options="0:动态分配;1:2GB;2:4GB;3:6GB;4:8GB" selected_index="0"/>
+    <label name="res_label" x="220" y="50" w="80" h="25" style:normal:font_size="14" text="分辨率："/>
+    <combo_box_ex max="0" name="res_combo" x="300" y="50" w="120" h="25" localize_options="false" options="0:自动;1:800x600;2:1024x768;3:1280x720;4:1920x1080;" selected_index="0"/>
+    <check_button name="fullscreen_check" x="430" y="50" w="120" h="25" text="全屏模式"/>
+  </view>
+</window>

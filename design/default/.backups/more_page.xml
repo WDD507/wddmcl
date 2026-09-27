@@ -1,0 +1,7 @@
+<window name="more_page">
+  <label name="Title" x="10" y="10" w="280" h="30" style:normal:text_color="#3F3F3F" style:normal:font_size="30" style:normal:font_name="" text="WDD's Minecraft Launcher"/>
+  <button name="home_page_btn" x="290" y="10" w="100" h="36" enable="true" style:disable:font_size="27" style:over:font_size="27" style:normal:font_size="27" style:pressed:font_size="27" style:focused:font_size="27" style:normal:font_name="" style="WDDdefault" text="主页"/>
+  <button name="download_page_btn" x="400" y="10" w="100" h="36" style:normal:font_name="" style:normal:font_size="27" style:pressed:font_size="27" style:over:font_size="27" style:disable:font_size="27" style:focused:font_size="27" style="WDDdefault" enable="true" text="下载"/>
+  <button name="settings_page_btn" x="510" y="10" w="100" h="36" style="WDDdefault" enable="true" text="设置"/>
+  <button name="more_page_btn" x="620" y="10" w="100" h="36" style:normal:font_name="" style:normal:font_size="27" style="WDDdefault" enable="false" text="更多"/>
+</window>

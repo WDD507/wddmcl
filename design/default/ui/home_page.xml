@@ -1,0 +1,26 @@
+<window name="home_page" enable="true" visible="true">
+  <!-- 标题 -->
+  <label name="Title" x="10" y="10" w="280" h="30" style:normal:text_color="#3F3F3F" style:normal:font_size="30" style:normal:font_name="" feedback="false" text="WDD's Minecraft Launcher"/>
+  <!-- 导航栏 -->
+  <button name="home_page_btn" x="290" y="10" w="100" h="36" enable="false" style="WDDdefault" feedback="false" text="主页"/>
+  <button name="download_page_btn" x="400" y="10" w="100" h="36" style="WDDdefault" feedback="false" text="下载"/>
+  <button name="settings_page_btn" x="510" y="10" w="100" h="36" style="WDDdefault" feedback="false" text="设置"/>
+  <button name="more_page_btn" x="620" y="10" w="100" h="36" style="WDDdefault" feedback="false" text="更多"/>
+  <!-- 账户信息 -->
+  <label name="account_label" x="20" y="68" w="260" h="25" enable="true" style="WDDdefault" feedback="false" text="当前账户：%s"/>
+  <button name="login_btn" x="85" y="155" w="130" h="36" style="WDDdefault" feedback="false" text="登录账户"/>
+  <!-- 版本信息卡片 -->
+  <view name="version_info_card" x="35" y="222" w="230" h="180" style:normal:bg_color="#F5F5F5" feedback="false">
+    <label name="version_label" x="15" y="15" w="100" h="25" style:normal:font_size="25" style:normal:text_color="#333333" style="WDDdefault" text="版本信息"/>
+    <label name="ver_id" x="15" y="45" w="200" h="25" style:normal:font_size="24" style="WDDdefault" text="版本：%s"/>
+    <label name="ver_type" x="15" y="75" w="200" h="25" style:normal:font_size="24" style="WDDdefault" text="类型：%s"/>
+    <label name="ver_java" x="15" y="105" w="200" h="25" style:normal:font_size="24" style="WDDdefault" text="Java版本：%s"/>
+    <label name="ver_libs" x="15" y="135" w="200" h="25" style:normal:font_size="24" style="WDDdefault" text="依赖库：%d个"/>
+  </view>
+  <!-- 启动参数 -->
+  <!-- 底部按钮 -->
+  <button name="choose_ver" x="10" y="460" w="130" h="50" style="WDDdefault" feedback="false" text="选择版本"/>
+  <button name="ver_settings" x="160" y="460" w="130" h="50" style="WDDdefault" feedback="false" text="版本设置"/>
+  <button name="start_game" x="10" y="520" w="280" h="70" style:normal:round_radius="5" style:normal:text_align_h="center" style:normal:text_align_v="middle" style="WDDdefault" style:normal:font_size="27" feedback="false" text="开始游戏"/>
+  <label name="label" x="70" y="104" w="160" h="28" style="WDDdefault" feedback="false" text="账户类型：%s"/>
+</window>
