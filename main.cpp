@@ -61,10 +61,12 @@ ret_t GUI_init() {
 
 App app;
 Launcher launcher;
+//int command();
 int main(int argc, char* argv[]) {
     for (int i=0; i<argc; i++) {
         args.push_back(string(argv[i]));
     }
+//    command();
 #ifdef USE_AWTK
     freopen("latest.log", "w", stdout);
     freopen("latest.log", "a", stderr);
@@ -107,7 +109,45 @@ int main(int argc, char* argv[]) {
     while (condition != "exit") {
         cout << "[Main] Please enter your choice: ";
         cin >> condition;
-        if(condition == "launch"){
+        if(condition == ""){
+            //
+        }else if(condition == "help"){
+            cout <<
+"=== 账户管理 ===\n"
+"account list              列出所有账户\n"
+"account add <用户名> <类型>   添加账户（类型: offline/mojang/littleskin）\n"
+"account remove <用户名>      删除账户\n"
+"account select <用户名>      选择当前账户\n"
+"account login <用户名> <密码> <类型>  登录账户（外置登录）\n"
+"account current           显示当前账户\n"
+
+"=== 版本管理 ===\n"
+"version list              列出已安装版本\n"
+"version remote            列出远程可用版本\n"
+"version download <版本号>  下载指定版本\n"
+"version info <版本号>      显示版本详细信息\n"
+"version remove <版本号>     删除版本\n"
+"\n"
+"=== 游戏启动 ===\n"
+"launch <版本号>            启动游戏（用当前账户）\n"
+"launch <版本号> <用户名>    启动游戏（指定账户）\n"
+"\n"
+"=== Java ===\n"
+"java detect               检测已安装的 Java\n"
+"java path                 显示当前 Java 路径\n"
+"java set <路径>            设置 Java 路径\n"
+"\n"
+"=== 配置 ===\n"
+"config show              显示当前配置\n"
+"config set <键> <值>       设置配置项\n"
+"\n"
+"=== 其他 ===\n"
+"update                    检查更新\n"
+"status                    显示启动器状态\n"
+"help                      显示帮助\n"
+"exit                      退出\n"
+            << endl;
+        }else if(condition == "launch"){
             // 测试启动游戏（示例）
             cout << "[Main] Testing game launch..." << endl;
             if(launcher.launchGame("1.20.1", "Player")){
