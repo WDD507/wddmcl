@@ -35,16 +35,26 @@ static bool shouldSkipDir(const fs::path& dir, const std::vector<std::string>& e
         if (nameLower == s) return true;
     }
 
-    // 用户自定义排除目录
+    // 用户自定义排除目录（精确路径前缀匹配，避免误杀）
     for (const auto& exclude : excludeDirs) {
-        std::string excludeLower = exclude;
+        // 标准化路径：统一小写 + 统一分隔符
+        fs::path excludePath(exclude);
+        std::string excludeLower = excludePath.lexically_normal().string();
         for (auto& c : excludeLower) c = static_cast<char>(tolower(c));
-        // 支持路径片段匹配：如果排除目录是完整路径的前缀，或目录名匹配
-        std::string dirStr = dir.string();
+        // 确保末尾有分隔符，避免 "F:\S" 误匹配 "F:\SomethingElse"
+        if (excludeLower.back() != '\\' && excludeLower.back() != '/') {
+            excludeLower += '\\';
+        }
+
+        std::string dirStr = dir.lexically_normal().string();
         std::string dirStrLower = dirStr;
         for (auto& c : dirStrLower) c = static_cast<char>(tolower(c));
-        // 完整路径前缀匹配（如 "C:\Games" 排除整个 Games 目录）
-        if (dirStrLower.find(excludeLower) != std::string::npos) return true;
+        if (dirStrLower.back() != '\\' && dirStrLower.back() != '/') {
+            dirStrLower += '\\';
+        }
+
+        // 路径前缀匹配：dir 以 exclude 开头（如 dir="F:\S\sub" 匹配 exclude="F:\S"）
+        if (dirStrLower.rfind(excludeLower, 0) == 0) return true;
         // 目录名精确匹配
         if (nameLower == excludeLower) return true;
     }
