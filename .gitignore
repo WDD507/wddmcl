@@ -47,3 +47,6 @@ mc-auth-ms/
 *.tmp
 *.bak
 *~
+
+# 已禁用的源文件（本地保留，不入库）
+*.disabled
