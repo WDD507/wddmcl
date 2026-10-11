@@ -36,7 +36,9 @@ struct Account {
     );
     Account();
     ~Account() = default;
+    operator bool() const;
     friend bool operator==(const Account &a, const Account &b);
+    friend bool operator!=(const Account &a, const Account &b);
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(
         Account, username, uuid, accessToken, type, isValid
     )
@@ -61,6 +63,7 @@ public:
 
     static AcctType acctypels[5];
     static std::string AcctTypeToStr(const AcctType &type);
+    static AcctType StrToAcctType(const std::string &st);
 
     int reloadAccount();
 

@@ -8,12 +8,19 @@
 #include <functional>
 #include <chrono>
 #include <vector>
+#include "../third_party/libcpr/include/curl/system.h"
 
 //typedef long long cpr_pf_arg_t;
-/*namespace cpr {
-    typedef long long cpr_pf_arg_t;
-}*/
+namespace cpr {
+    //typedef long long cpr_pf_arg_t;
+    using cpr_off_t = curl_off_t;
+    using cpr_pf_arg_t = cpr_off_t;
+}
 
+struct httpResp {
+    std::string text;
+    int status;
+};
 class HttpClient {
 public:
     HttpClient() = default;
@@ -29,10 +36,12 @@ public:
     bool maybe_succeed(int status_code=200);
 
     // GET请求
-    std::string getRequest(const std::string& url);
+    //std::string getRequest(const std::string& url);
+    httpResp getRequest(const std::string& url);
     
     // POST请求
-    std::string postRequest(const std::string& url, const std::string& data);
+    //std::string postRequest(const std::string& url, const std::string& data);
+    httpResp postRequest(const std::string& url, const std::string& data);
 
     // POST请求（返回 HTTP 状态码，用于 /validate 这类只看状态码的接口）
     int postRequestStatus(const std::string& url, const std::string& data);
@@ -45,7 +54,8 @@ public:
         const std::string& url,
         const std::string& savePath,
         std::function<bool(
-            long long, long long, long long, long long, intptr_t
+            cpr::cpr_pf_arg_t, cpr::cpr_pf_arg_t,
+            cpr::cpr_pf_arg_t, cpr::cpr_pf_arg_t, intptr_t
         )> progressCallback=NULL,
         intptr_t user_data=0
     );
@@ -53,7 +63,8 @@ public:
         const std::string& url,
         const std::string& savePath,
         bool(*progressCallback)(
-            long long, long long, long long, long long, intptr_t
+            cpr::cpr_pf_arg_t, cpr::cpr_pf_arg_t,
+            cpr::cpr_pf_arg_t, cpr::cpr_pf_arg_t, intptr_t
         )=NULL,
         intptr_t user_data=0
     );
@@ -62,6 +73,7 @@ public:
     void setTimeout(long long seconds);
     void setTimeout(std::chrono::milliseconds ms);
     long long getTimeOutSec();
+    std::chrono::milliseconds getTimeOutChrono();
 };
 
 #endif // HTTP_CLIENT_H

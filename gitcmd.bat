@@ -34,3 +34,6 @@ git -C E:\PCL\wddmcl remote add origin https://github.com/WDD507/wddmcl.git
 git -C E:\PCL\wddmcl remote set-url origin https://github.com/WDD507/wddmcl.git
 git -C E:\PCL\wddmcl branch -M main
 git -C E:\PCL\wddmcl push -u origin main
+
+git rm ./utils/wddwxy_json.h
+git rm ./utils/wddwxy_json.cpp 

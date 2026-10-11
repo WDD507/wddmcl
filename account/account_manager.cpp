@@ -49,6 +49,9 @@ Account::Account() {
     *this = Account("", "", "",
         AcctType::OffLine, false);
 }
+Account::operator bool() const {
+    return *this != ACC_NOT_FOUND;
+}
 
 const Account ACC_NOT_FOUND=Account(
     "Not Found", "notfound",
@@ -63,6 +66,9 @@ bool operator==(const Account &a, const Account &b) {
         (a.type == b.type) &&
         (!(a.isValid ^ b.isValid))
     );
+}
+bool operator!=(const Account &a, const Account &b) {
+    return !(a == b);
 }
 
 AcctType AccountManager::acctypels[5]={
@@ -82,6 +88,20 @@ std::string AccountManager::AcctTypeToStr(const AcctType &type) {
         case AcctType::Other: default:  key = "Other";      break;
     }
     return key;
+}
+AcctType AccountManager::StrToAcctType(const std::string &st) {
+    if(st == "Offline"){
+        return AcctType::OffLine;
+    }else if(st == "Mojang"){
+        return AcctType::Mojang;
+    }else if(st == "LittleSkin"){
+        return AcctType::LittleSkin;
+    }else if(st == "Microsoft"){
+        return AcctType::Microsoft;
+    }else{
+        return AcctType::Other;
+    }
+    return AcctType::Other;
 }
 
 int AccountManager::reloadAccount() {

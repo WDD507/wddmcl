@@ -7,6 +7,13 @@
 class ConfigManager;
 class VersionManager;
 
+enum class lStatus : int {
+    NotReady = 0,
+    Launching = 1,
+    Ready = 2,
+    Error = 3
+};
+
 class Launcher {
 public:
     Launcher(bool init, std::string stts);

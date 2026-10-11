@@ -22,6 +22,7 @@ build/
 .minecraft/
 output.txt
 latest.log
+*.log
 
 # 测试文件与临时脚本
 test_*
@@ -31,6 +32,9 @@ example_*
 compiler_detection*
 compile_compiler_detection.bat
 SConstruct
+SConscript
+third_party\zlib\zlib-1.3.2\contrib\minizip\minizip.c
+third_party\zlib\zlib-1.3.2\contrib\minizip\miniunz.c
 
 # 微软认证测试
 mc-auth-ms/

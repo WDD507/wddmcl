@@ -22,7 +22,7 @@ HttpClient &HttpClient::instance() {
     return inst;
 }
 
-std::string HttpClient::getRequest(const std::string& url) {
+/*std::string HttpClient::getRequest(const std::string& url) {
     std::cout << "[HttpClient] GET request: " << url << std::endl;
     // DONE(2026/6/9 14:40)(2026/7/8 6:30): 实现GET请求
     try {
@@ -36,9 +36,24 @@ std::string HttpClient::getRequest(const std::string& url) {
         return "";
     }
     return "";
+}*/
+httpResp HttpClient::getRequest(const std::string& url) {
+    std::cout << "[HttpClient] GET request: " << url << std::endl;
+    // DONE(2026/6/9 14:40)(2026/7/8 6:30): 实现GET请求
+    try {
+        cpr::Response res=cpr::Get(
+            cpr::Url{url},
+            (cpr::Timeout)tmout
+        );
+        return {res.text, res.status_code};
+    } catch (const std::exception &e) {
+        std::cerr << "Download error: " << e.what() << std::endl;
+        return {"", 0};
+    }
+    return {"", 0};
 }
 
-std::string HttpClient::postRequest(const std::string& url, const std::string& data) {
+/*std::string HttpClient::postRequest(const std::string& url, const std::string& data) {
     std::cout << "[HttpClient] POST request: " << url << std::endl;
     // DONE(2026/6/9 14:45)(2026/7/8 6:30): 实现POST请求
     try {
@@ -53,9 +68,25 @@ std::string HttpClient::postRequest(const std::string& url, const std::string& d
         return "";
     }
     return "";
+}*/
+httpResp HttpClient::postRequest(const std::string& url, const std::string& data) {
+    std::cout << "[HttpClient] POST request: " << url << std::endl;
+    // DONE(2026/6/9 14:45)(2026/7/8 6:30): 实现POST请求
+    try {
+        cpr::Response res=cpr::Post(
+            cpr::Url{url},
+            cpr::Body{data},
+            (cpr::Timeout)tmout
+        );
+        return {res.text, res.status_code};
+    } catch (const std::exception &e) {
+        std::cerr << "Download error: " << e.what() << std::endl;
+        return {"", 0};
+    }
+    return {"", 0};
 }
 
-int HttpClient::postRequestStatus(const std::string& url, const std::string& data) {
+/*int HttpClient::postRequestStatus(const std::string& url, const std::string& data) {
     std::cout << "[HttpClient] POST request (status): " << url << std::endl;
     try {
         cpr::Response res=cpr::Post(
@@ -69,6 +100,10 @@ int HttpClient::postRequestStatus(const std::string& url, const std::string& dat
         return 0;  // 网络异常，状态码 0 表示失败
     }
     return 0;
+}*/
+int HttpClient::postRequestStatus(const std::string& url, const std::string& data) {
+    std::cout << "[HttpClient] POST request (status): " << url << std::endl;
+    return postRequest(url, data).status;
 }
 
 bool HttpClient::downloadFile(const std::string& url, const std::string& savePath) {
@@ -162,4 +197,7 @@ void HttpClient::setTimeout(std::chrono::milliseconds mseconds) {
 }*/
 long long HttpClient::getTimeOutSec() {
     return tmout.ms.count() / 1000;
+}
+std::chrono::milliseconds HttpClient::getTimeOutChrono() {
+    return std::chrono::milliseconds(tmout.Milliseconds());//std::chrono::milliseconds(tmout)
 }

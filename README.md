@@ -76,7 +76,7 @@ wddmcl/
 
 ### 环境要求
 
-- **编译器**：MinGW64 g++（C++17），或 MSVC
+- **编译器**：MinGW64 g++（C++17）<!--，或 MSVC-->
 - **第三方库**：已包含在 `third_party/` 中，无需额外安装
 
 ### 使用脚本编译（推荐）
@@ -168,11 +168,20 @@ g++ -I. -I./minecraft -I./account -I./java -I./mod -I./utils -I./config -I./thir
 - [x] 版本列表获取与下载
 - [x] libraries / natives / assets 下载
 - [x] 游戏启动命令构建
-- [ ] 微软账户 OAuth 登录
 - [ ] Forge / Mod 管理
 - [ ] GUI 界面（AWTK）
 - [ ] 自动下载 Java 运行时
 - [ ] 跨平台支持（Linux / 鸿蒙）
+- [ ] 微软账户 OAuth 登录
+
+***
+
+## 🖋 作者
+- [WDDWXY](https://www.wddwxy.cn/)
+- 🤖 AI 成员
+  - [TRAE](https://www.trae.cn/)
+  - [Qoder](https://qoder.com/zh)（现已离开）
+  - [DeepSeek](https://www.deepseek.com/)
 
 ***
 

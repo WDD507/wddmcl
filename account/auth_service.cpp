@@ -80,7 +80,7 @@ bool AuthService::yggdrasil(
     req["requestUser"] = true;
 
     //static HttpClient http;
-    std::string resp = http_client.postRequest(url, req.dump());
+    std::string resp = http_client.postRequest(url, req.dump()).text;
     if (resp.empty()) {
         std::cerr << "[AuthService] Yggdrasil auth failed: empty response"
             << std::endl;
@@ -198,9 +198,11 @@ bool AuthService::refreshToken(Account& acc) {
     };
 
     std::string respBody;
-    int status = http_client.postRequestStatus(url, reqBody.dump());
+    httpResp res=http_client.postRequest(url, reqBody.dump());
+    int status = res.status;
+    std::string rest=res.text;
     if (http_client.maybe_succeed(status)) {
-        nlohmann::json resp=nlohmann::json::parse(respBody);
+        nlohmann::json resp=nlohmann::json::parse(rest);
         acc.accessToken = resp["accessToken"].get<std::string>();
         accmgr.persist(); // 持久化到 accounts.json
         return true;

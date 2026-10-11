@@ -78,6 +78,11 @@ VersionInfo::VersionInfo() {
     );
 }
 
+VersionManager &VersionManager::instance() {
+    static VersionManager vermgr;
+    return vermgr;
+}
+
 std::vector<RemoteVersionInfo> VersionManager::remoteVer={};
 
 std::vector<std::string> VersionManager::getAvailableVersions() {
@@ -175,7 +180,7 @@ bool VersionManager::downloadVersionfromURL(
         versionDir + FileSystemUtils::getSlash() +
         version + ".json"
     );
-    success |= http_client.downloadFile(
+    success &= http_client.downloadFile(
         j["downloads"]["client"]["url"],
         versionDir + FileSystemUtils::getSlash() +
         version + ".jar"
@@ -205,7 +210,7 @@ bool VersionManager::downloadVersionfromURL(
             App::getCurrentOSVersion()
         )) {
             if (lib["downloads"].contains("artifact")) {
-                success |= http_client.downloadFile(
+                success &= http_client.downloadFile(
                     lib["downloads"]["artifact"]["url"].get<std::string>(),
                     FileSystemUtils::getLibrariesDirectory() +
                     lib["downloads"]["artifact"]["path"].get<std::string>()
@@ -233,7 +238,7 @@ bool VersionManager::downloadVersionfromURL(
                 savepath = FileSystemUtils::getLibrariesDirectory() +
                         lib["downloads"]["classifiers"][natives]["path"]
                             .get<std::string>();
-                success |= http_client.downloadFile(
+                success &= http_client.downloadFile(
                     lib["downloads"]["classifiers"][natives]["url"]
                         .get<std::string>(),
                     savepath

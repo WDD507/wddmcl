@@ -20,6 +20,8 @@ struct JavaSearchOptions {
 
 class JavaDetector {
 public:
+    static JavaDetector &instance();
+
     // 检测系统中的Java安装（全盘扫描，带自定义过滤）
     std::vector<JavaInfo> detectJavaInstallations(
         const JavaSearchOptions& options = {}

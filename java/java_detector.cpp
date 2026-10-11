@@ -110,6 +110,11 @@ static void findJavaInDir(
     }
 }
 
+JavaDetector &JavaDetector::instance() {
+    static JavaDetector javadet;
+    return javadet;
+}
+
 // ==================== 私有辅助方法 ====================
 
 std::string JavaDetector::execCommand(const std::string& command) {

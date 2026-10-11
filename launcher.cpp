@@ -5,7 +5,7 @@
 #include "minecraft/game_launcher.h"
 #include "config/config_manager.h"
 #include "minecraft/version_manager.h"
-#include "java/java_detector.h"
+//#include "java/java_detector.h"
 
 Launcher::Launcher(bool init, std::string stts) {
     status = stts;
@@ -42,7 +42,7 @@ bool Launcher::initialize() {
     // 2. 初始化版本管理器
     VersionManager* versionManager = new VersionManager();
     
-    // 3. 检测Java（如果未配置）
+    /*// 3. 检测Java（如果未配置）
     if (config->getJavaPath().empty()) {
         std::cout << "[Launcher] Java path not configured, detecting..." << std::endl;
         JavaDetector javaDetector;
@@ -73,7 +73,7 @@ bool Launcher::initialize() {
             delete versionManager;
             return false;
         }
-    }
+    }*/
     
     // 4. 保存配置
     config->save();

@@ -76,7 +76,7 @@ int App::checkForUpdate(Version& latestVersion) {
 
     // 1. 从服务器获取最新版本信息
     HttpClient http;
-    string response = http.getRequest(UPDATE_CHECK_URL);
+    string response = http.getRequest(UPDATE_CHECK_URL).text;
     if (response.empty()) {
         cerr << "[App] Failed to fetch version info from server" << endl;
         return -1;

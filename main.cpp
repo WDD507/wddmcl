@@ -1,8 +1,15 @@
 #include <iostream>
 #include <ostream>
+#include <sstream>
 #include <string>
+#include <vector>
+//#include <string_view>
 #include "app.h"
 #include "launcher.h"
+#include "account/account_manager.h"
+#include "minecraft/version_manager.h"
+#include "java/java_manager.h"
+#include "java/java_detector.h"
 //#define USE_AWTK "Used AWTK"
 #ifdef USE_AWTK
 #include <cstdio>
@@ -17,6 +24,11 @@
 #endif
 using namespace std;
 
+namespace {
+    AccountManager &accmgr=AccountManager::instance();
+    VersionManager &vermgr=VersionManager::instance();
+    JavaDetector &javadet=JavaDetector::instance();
+}
 #ifdef USE_AWTK
 /*
 // 页面声明
@@ -56,6 +68,47 @@ ret_t GUI_init() {
     );
     InitCode |= (int)app_init();
     return ret_t(InitCode);
+}
+#else
+//inline constexpr string_view get_help_text();
+//inline const string get_help_text();
+//inline const char *get_help_text()
+inline string get_help_text() {
+    return
+"=== 账户管理 ===\n"
+"account list              列出所有账户\n"
+"account add <用户名> <类型>   添加账户（类型: offline/mojang/littleskin）\n"
+"account remove <用户名>      删除账户\n"
+"account select <用户名>      选择当前账户\n"
+"account login <用户名> <密码> <类型>  登录账户（外置登录）\n"
+"account current           显示当前账户\n"
+
+"=== 版本管理 ===\n"
+"version list              列出已安装版本\n"
+"version remote            列出远程可用版本\n"
+"version download <版本号>  下载指定版本\n"
+"version info <版本号>      显示版本详细信息\n"
+"version remove <版本号>     删除版本\n"
+"\n"
+"=== 游戏启动 ===\n"
+"launch <版本号>            启动游戏（用当前账户）\n"
+"launch <版本号> <用户名>    启动游戏（指定账户）\n"
+"\n"
+"=== Java ===\n"
+"java scan detect               检测已安装的 Java\n"
+"java path                 显示当前 Java 路径\n"
+"java set <路径>            设置 Java 路径\n"
+"\n"
+"=== 配置 ===\n"
+"config show              显示当前配置\n"
+"config set <键> <值>       设置配置项\n"
+"\n"
+"=== 其他 ===\n"
+"update                    检查更新\n"
+"status                    显示启动器状态\n"
+"help                      显示帮助\n"
+"exit                      退出\n"
+    ;
 }
 #endif
 
@@ -108,55 +161,106 @@ int main(int argc, char* argv[]) {
     string condition="";
     while (condition != "exit") {
         cout << "[Main] Please enter your choice: ";
-        cin >> condition;
-        if(condition == ""){
-            //
-        }else if(condition == "help"){
-            cout <<
-"=== 账户管理 ===\n"
-"account list              列出所有账户\n"
-"account add <用户名> <类型>   添加账户（类型: offline/mojang/littleskin）\n"
-"account remove <用户名>      删除账户\n"
-"account select <用户名>      选择当前账户\n"
-"account login <用户名> <密码> <类型>  登录账户（外置登录）\n"
-"account current           显示当前账户\n"
-
-"=== 版本管理 ===\n"
-"version list              列出已安装版本\n"
-"version remote            列出远程可用版本\n"
-"version download <版本号>  下载指定版本\n"
-"version info <版本号>      显示版本详细信息\n"
-"version remove <版本号>     删除版本\n"
-"\n"
-"=== 游戏启动 ===\n"
-"launch <版本号>            启动游戏（用当前账户）\n"
-"launch <版本号> <用户名>    启动游戏（指定账户）\n"
-"\n"
-"=== Java ===\n"
-"java detect               检测已安装的 Java\n"
-"java path                 显示当前 Java 路径\n"
-"java set <路径>            设置 Java 路径\n"
-"\n"
-"=== 配置 ===\n"
-"config show              显示当前配置\n"
-"config set <键> <值>       设置配置项\n"
-"\n"
-"=== 其他 ===\n"
-"update                    检查更新\n"
-"status                    显示启动器状态\n"
-"help                      显示帮助\n"
-"exit                      退出\n"
-            << endl;
-        }else if(condition == "launch"){
-            // 测试启动游戏（示例）
-            cout << "[Main] Testing game launch..." << endl;
-            if(launcher.launchGame("1.20.1", "Player")){
+        if (!(getline(cin, condition))){ // 读取输入的命令，输入EOF后退出
+            break;
+        }
+        istringstream iss(condition);
+        string cmd;
+        iss >> cmd;
+        if (cmd == "account") {
+            string sub;
+            iss >> sub;
+            if (sub == "list" ) {
+                vector<Account> accounts=accmgr.getStructureAccounts();
+                for (const Account &acc : accounts) {
+                    std::cout << "  " << acc.username
+                              << " | " << AccountManager::AcctTypeToStr(acc.type)
+                              << ((acc == accmgr.getCurrentAccount()) ? " [当前]" : "" )
+                              << std::endl;
+                }
+            }else if(sub == "add"){
+                std::string name, type;
+                iss >> name >> type;
+                accmgr.addAccount(name, accmgr.StrToAcctType(type));
+            }else if(sub == "addfull"){
+                std::string name,type,uuid,accessToken;
+                iss >> name >> type >> uuid >> accessToken;
+                accmgr.addAccount(name, accmgr.StrToAcctType(type), uuid, accessToken);
+            } else if (sub == "remove" ) {
+                std::string name;
+                iss >> name;
+                accmgr.removeAccount(name);
+            } else if (sub == "select" ) {
+                std::string name;
+                iss >> name;
+                accmgr.selectAccount(name, accmgr.getAccountFromName(name).type);
+            } else if (sub == "current" ) {
+                Account acc = accmgr.getCurrentAccount();
+                if (acc) {
+                    std::cout << "当前账户: " << acc.username
+                              << " | " << AccountManager::AcctTypeToStr(acc.type) << std::endl;
+                } else {
+                    std::cout << "未选择账户" << std::endl;
+                }
+            }
+        } else if (cmd == "version") {
+            std::string sub;
+            iss >> sub;
+            if (sub == "list" ) {
+                vector<string> vers=vermgr.getAvailableVersions();
+                for (const string &ver : vers) {
+                    cout << ver << "\n";
+                }
+            } else if (sub == "download") {
+                std::string ver;
+                iss >> ver;
+                vermgr.downloadVersion(ver);
+            }
+        } else if (cmd == "java" ) {
+            std::string sub;
+            iss >> sub;
+            if (sub == "scan") {
+                std::string sub2;
+                iss >> sub2;
+                JavaSearchOptions opts;
+                if (sub2 == "detect" ) { // 收集所有剩余参数作为 includeDirs
+                    std::string dir;
+                    while (iss >> dir) {
+                        opts.includeDirs.push_back(dir);
+                    }
+                } else if (sub2 == "exclude" ) { // 收集所有剩余参数作为 excludeDirs
+                    std::string dir;
+                    while (iss >> dir) {
+                        opts.excludeDirs.push_back(dir);
+                    }
+                } else {
+                    std::cout << "用法: java detect [目录...] | java exclude [目录...]" << std::endl;
+                    continue ;
+                }
+                vector<JavaInfo> javaList = javadet.detectJavaInstallations(opts);
+                std::cout << "找到 " << javaList. size () << " 个Java：" << std::endl;
+                for ( const JavaInfo & jv : javaList) {
+                    std::cout << "  v" << jv.version
+                            << " | " << jv.vendor
+                            << " | " << jv.path
+                            << (jv.isValid ? " [有效]" : " [无效]" )
+                            << std::endl;
+                }
+            }
+        }else if(cmd == "help"){
+            cout << get_help_text() << endl;
+        }else if(cmd == "launch"){
+            // 启动游戏
+            string sub="";
+            iss >> sub;
+            cout << "[Main] Game " << sub << " is launching..." << endl;
+            if(launcher.launchGame(sub, accmgr.getCurrentAccountStr())){
                 cout << "[Main] Game launched successfully!" << endl;
             }else{
                 cerr << "[Main] Failed to launch game!" << endl;
                 return 1;
             }
-        }else if(condition == "exit"){
+        }else if(cmd == "exit"){
             cout << "[Main] Exiting program..." << endl;
             break;
         }else{
